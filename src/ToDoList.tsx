@@ -62,6 +62,7 @@ function ToDoList (props: ToDoListPropsType) {
                     <button className={props.filter==='all' ? 'active-filter' : ''} onClick={onClickChangeFilterAll}>All</button>
                     <button className={props.filter==='active' ? 'active-filter' : ''} onClick={onClickChangeFilterActive}>Active</button>
                     <button className={props.filter==='completed' ? 'active-filter' : ''} onClick={onClickChangeFilterCompleted}>Completed</button>
+                    <button>new button</button>
                 </div>
             </div>
     );
