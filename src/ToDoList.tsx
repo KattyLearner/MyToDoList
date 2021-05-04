@@ -5,18 +5,20 @@ export type ToDoListPropsType = {
     title: string
     tasks: TaskType[]
     filter: filterValueType
-    removeTask: (taskID: string) => void
-    changeFilter: (value: filterValueType) => void
-    addTask: (title: string) => void
-    changeStatus: (taskID: string, isDone: boolean) => void
+    removeTask: (taskID: string, toDoListId: string) => void
+    changeFilter: (value: filterValueType, toDoListId: string) => void
+    addTask: (title: string, toDoListId: string) => void
+    changeStatus: (taskID: string, isDone: boolean, toDoListId: string) => void
+    removeToDoList: (toDoListId: string) => void
+    id: string
 }
 
 function ToDoList (props: ToDoListPropsType) {
         const tasksJSXElements = props.tasks.map((t) => {
-            const onClickRemove = ()=>{props.removeTask(t.id)}
+            const onClickRemove = ()=>{props.removeTask(t.id, props.id)}
             return (
             <li key={t.id}>
-            <input type="checkbox" checked={t.isDone} onChange={(e) => props.changeStatus(t.id, e.currentTarget.checked )}/>
+            <input type="checkbox" checked={t.isDone} onChange={(e) => props.changeStatus(t.id, e.currentTarget.checked, props.id)}/>
             <span className={t.isDone ? 'is-done' : ''}>{t.title}</span>
             <button onClick={onClickRemove}>Delete</button>
             </li> )
@@ -25,7 +27,7 @@ function ToDoList (props: ToDoListPropsType) {
 
     const onClickAdd = () => {
             if (value.trim() !== '') {
-            props.addTask(value.trim())
+            props.addTask(value.trim(), props.id)
             setValue('')}
             else {
                setError('Field is required')
@@ -37,15 +39,17 @@ function ToDoList (props: ToDoListPropsType) {
     const onKeyPressAddTask = (e: KeyboardEvent<HTMLInputElement>) => {
             setError(null)
             if (e.key === 'Enter') {onClickAdd()}}
-    const onClickChangeFilterAll = ()=> {props.changeFilter('all')}
-    const onClickChangeFilterActive = ()=> {props.changeFilter('active')}
-    const onClickChangeFilterCompleted = ()=> {props.changeFilter('completed')}
-
+    const onClickChangeFilterAll = ()=> {props.changeFilter('all', props.id)}
+    const onClickChangeFilterActive = ()=> {props.changeFilter('active', props.id)}
+    const onClickChangeFilterCompleted = ()=> {props.changeFilter('completed', props.id)}
 
     const [value, setValue] = useState('')
+    const removeToDoList = () => {
+            props.removeToDoList(props.id)
+    }
     return  (
         <div>
-                <h3>{props.title}</h3>
+            <h3>{props.title} <button onClick={removeToDoList}>x</button></h3>
                 <div>
                     <input
                         className={error ? 'error' : ''}
