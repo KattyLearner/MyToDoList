@@ -2,7 +2,9 @@ import React, {useState} from 'react';
 import './App.css';
 import ToDoList from "./ToDoList";
 import {v1} from "uuid";
-import AddItemForm from "./AddToDoList";
+import AddItemForm from "./AddItemForm";
+import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
+import {Menu} from "@material-ui/icons";
 
 export type TaskType = {
     id: string,
@@ -113,7 +115,22 @@ let [toDoLists, setToDoList] = useState<Array<ToDoListType>>([
 
     return (
         <div className="App">
+            <AppBar position="static">
+                <Toolbar>
+                    <IconButton edge="start"  color="inherit" aria-label="menu">
+                        <Menu />
+                    </IconButton>
+                    <Typography variant="h6" >
+                        ToDoList
+                    </Typography>
+                    <Button color="inherit">Login</Button>
+                </Toolbar>
+            </AppBar>
+            <Container fixed>
+                <Grid container style={{padding: '20px'}}>
             <AddItemForm addItem ={addToDoList} />
+                </Grid>
+                <Grid container spacing={3}>
             {toDoLists.map((td)=>{
                 let taskForToDoList = tasksData[td.id]
                 if (td.filter === 'active') {
@@ -122,7 +139,10 @@ let [toDoLists, setToDoList] = useState<Array<ToDoListType>>([
                 if (td.filter === 'completed') {
                     taskForToDoList= tasksData[td.id].filter(t => t.isDone === true)
                 }
-                return <ToDoList title={td.title}
+
+                return <Grid item>
+                    <Paper style = { {padding: '10px'} }>
+                <ToDoList title={td.title}
                                  tasks={taskForToDoList}
                                  removeTask={removeTask}
                                  changeFilter={changeFilter}
@@ -134,8 +154,11 @@ let [toDoLists, setToDoList] = useState<Array<ToDoListType>>([
                                  removeToDoList = {removeToDoList}
                                  changeTaskTitle={changeTaskTitle}
                 />
+                    </Paper>
+                </Grid>
             })}
-
+                </Grid>
+            </Container>
         </div>
     );
 }
