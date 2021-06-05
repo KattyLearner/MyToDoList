@@ -22,7 +22,6 @@ export type ToDoListPropsType = {
 function ToDoList (props: ToDoListPropsType) {
         const tasksJSXElements = props.tasks.map((t) => {
             const onChangeTitleHandler = (newValue: string) => {
-               debugger
                 props.changeTaskTitle(newValue, props.id, t.id)}
             const onClickRemove = ()=>{props.removeTask(t.id, props.id)}
             return (
@@ -47,10 +46,10 @@ function ToDoList (props: ToDoListPropsType) {
         props.addTask(title, props.id)
     }
 
+
     return  (
         <div>
             <h3>
-                {/*<EditableSpan title={props.title} onChange={onChangeTitleHandler} />*/}
                 {props.title}
                 <IconButton onClick={removeToDoList} aria-label="delete">
                     <Delete />
