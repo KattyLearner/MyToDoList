@@ -33,7 +33,9 @@ const ADD_TASK = 'ADD_TASK'
 const CHANGE_TASK_STATUS = 'CHANGE_TASK_STATUS'
 const CHANGE_TASK_TITLE = 'CHANGE_TASK_TITLE'
 
-export const tasksReducer = (tasksData: TaskStateType, action: UnionTaskType) => {
+const initialState: TaskStateType = {}
+
+export const tasksReducer = (tasksData: TaskStateType = initialState, action: UnionTaskType) => {
     switch (action.type) {
         case 'REMOVE_TASK':
             return {

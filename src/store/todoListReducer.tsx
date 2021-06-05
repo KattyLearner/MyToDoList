@@ -27,8 +27,9 @@ const ADD_TODOLIST = 'ADD_TODOLIST'
 const CHANGE_TODOLIST_TITLE = 'CHANGE_TODOLIST_TITLE'
 const CHANGE_TODOLIST_FILTER = 'CHANGE_TODOLIST_FILTER'
 
+const initialState: Array<ToDoListType> = []
 
-export const todolistsReducer = (todoList: Array<ToDoListType>, action: UnionTodoListType) => {
+export const todolistsReducer = (todoList: Array<ToDoListType> = initialState, action: UnionTodoListType) => {
     switch (action.type) {
         case 'REMOVE_TODOLIST':
             return todoList.filter(tl=>tl.id !== action.toDoListId );
